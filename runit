@@ -1,0 +1,37 @@
+#!/bin/bash
+# runit[.sh]
+#
+# Small utility to start the Flask application
+#
+# Version    : 0.1.0
+# Site       : https://github.com/fhecorrea
+# Author     : Fhelip Corrêa<fhecorrea@gmail.com>
+# Repair by  : Fhelip Corrêa<fhecorrea@gmail.com>
+#
+# --------------------------------------------------
+# Non-deployable
+# --------------------------------------------------
+#
+# History    : 
+#    v0.1.0 2018-07-26, Fhelip Corrêa
+#      - Initial version
+#
+# License    : MIT 2.0
+#
+
+# if the below envirionment variable don't exist...
+if test ! FLASK_APP
+then
+    echo "set root filename"
+    export FLASK_APP = app
+fi
+
+# ... if this another one also has not setted
+if test ! FLASK_ENV
+then
+    echo "setting envirionment app"
+    #export FLASK_ENV = production
+    export FLASK_ENV = development
+fi
+
+python3 -m flask run

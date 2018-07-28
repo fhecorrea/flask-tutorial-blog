@@ -1,2 +1,2 @@
 # ...
-I'm following the Flask tutorial, with some modifications 
+I'm following the [Flask tutorial](http://flask.pocoo.org/docs/1.0/tutorial/), with some modifications 

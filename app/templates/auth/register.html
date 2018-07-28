@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h2>{% block title %}Register{% endblock %}</h2>
+{% endblock %}
+{% block content %}
+    <form method="POST">
+        <label for="alias">Alias</label>
+        <input id="alias" type="text" name="alias" placeholder="Your alias" value="" />
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Your e-mail address" />
+        <label for="passwd">Password</label>
+        <input type="password" name="passwd" id="passwd" placeholder="Your password" />
+        <label for="passwd">Your password again</label>
+        <input type="password" name="passwdconfmd" id="passwdconfmd" placeholder="Confirm your password" />
+        <input type="submit" value="Register now!">
+    </form>
+{% endblock %}

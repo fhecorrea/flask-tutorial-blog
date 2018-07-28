@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %} - App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</head>
+<body>
+    <nav>
+        <h1>Appl</h1>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Blog</a></li>
+            {% if g.user %}
+                <li>{{ g.user['alias'] }} <small>({{ g.user['email'] }})</small></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+            {% endif %}
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+    <section class="content">
+        <header>{% block header %}{% endblock %}</header>
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+        <footer>{% block footer %}{% endblock %}</footer>
+    </section>
+</body>
+</html>
