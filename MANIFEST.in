@@ -1,0 +1,4 @@
+include fhblog/schema.sql
+graft fhblog/static
+graft fhblog/templates
+global-exclude *.pyc

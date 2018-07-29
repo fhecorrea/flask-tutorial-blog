@@ -5,33 +5,45 @@
 #
 # Version    : 0.1.0
 # Site       : https://github.com/fhecorrea
-# Author     : Fhelip Corrêa<fhecorrea@gmail.com>
-# Repair by  : Fhelip Corrêa<fhecorrea@gmail.com>
+# Author     : Fhelip Correa<fhecorrea@gmail.com>
+# Repair by  : Fhelip Correa<fhecorrea@gmail.com>
 #
 # --------------------------------------------------
 # Non-deployable
 # --------------------------------------------------
 #
 # History    : 
-#    v0.1.0 2018-07-26, Fhelip Corrêa
+#    v0.1.0 2018-07-26, Fhelip Correa
 #      - Initial version
+#    v0.2.0 2018-07-29, Fhelip Correa
+#      - Dribling the issue about the env vars
 #
 # License    : MIT 2.0
 #
 
+# set a main application folder
+#MAIN_APP_FOLDER="fhblog"
+#FLASK_APP_ENV="development"
+
 # if the below envirionment variable don't exist...
-if test ! FLASK_APP
-then
-    echo "set root filename"
-    export FLASK_APP = app
-fi
+#if test ! ${FLASK_APP}
+#then
+#    echo "set root filename"
+#    export FLASK_APP = ${MAIN_APP_FOLDER}
+#fi
+
+#if [ ${FLASK_APP} -ne ${MAIN_APP_FOLDER} ]; then
+#    export FLASK_APP = ${MAIN_APP_FOLDER}
+#fi
 
 # ... if this another one also has not setted
-if test ! FLASK_ENV
-then
-    echo "setting envirionment app"
+#if test ! ${FLASK_APP}
+#then
+#    echo "setting envirionment app"
     #export FLASK_ENV = production
-    export FLASK_ENV = development
-fi
-
+#    export FLASK_ENV = ${FLASK_APP_ENV}
+#fi
+# TODO: Fix the bug about these envirionment vars
+export FLASK_APP=fhblog
+export FLASK_ENV=development
 python3 -m flask run

@@ -2,8 +2,8 @@ from flask import (
     Blueprint, flash, redirect, url_for, g, render_template, request
 )
 from werkzeug.exceptions import abort
-from app.auth import login_required
-from app.db import get_conn
+from fhblog.auth import login_required
+from fhblog.db import get_conn
 
 blueprint = Blueprint('blog', __name__)
 
