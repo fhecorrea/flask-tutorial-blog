@@ -1,9 +1,9 @@
 import functools
 
+from time import time
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from time import time
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import get_conn
 
@@ -29,7 +29,7 @@ def login_required(view):
 
     return wrapped_view
 
-@blueprint.route('/register', methods=('GET', 'POST'))
+@blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         alias = request.form['alias']
@@ -64,7 +64,7 @@ def register():
 
     return render_template('auth/register.html')
 
-@blueprint.route('/login', methods=('GET', 'POST'))
+@blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']

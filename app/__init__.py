@@ -25,13 +25,10 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # ROUTES
-    @app.route('/', methods=['GET'])
-    def index():
-        return 'It works!'
-
-    from . import db, auth
+    from . import db, auth, blog
     db.init_app(app)
     app.register_blueprint(auth.blueprint)
+    app.register_blueprint(blog.blueprint)
+    app.add_url_rule('/', endpoint='index')
 
     return app

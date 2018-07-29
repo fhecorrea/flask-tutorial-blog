@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h2>{% block title %}Post editing{% endblock %}</h2>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('blog.index') }}">Cancel</a>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <form method="POST">
+        <label for="post_title">Title</label>
+        <input 
+            type="text" 
+            name="post_title" 
+            id="post_title" 
+            value="{{ request.form['post_title'] or post['title'] }}"
+            required>
+        <label for="post_text">Text <small>(min. 5 chars)</small></label>
+        <textarea
+            name="post_text"
+            id="post_text"
+            required>{{ request.form['post_text'] or post['body'] }}</textarea>
+        <input type="submit" value="Update">
+    </form>
+    <form action="{{ url_for('blog.delete', post_id=post['id']) }}" method="POST">
+        <input class="danger" type="submit" value="Delete this post" onclick="return confirm('Are you sure?');">
+    </form>
+{% endblock %}
+{% block footer %}&copy; hosted in somewhere{% endblock %}

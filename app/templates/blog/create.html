@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h2>{% block title %}Creating a new post{% endblock %}</h2>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('blog.index') }}">Cancel</a>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <form method="POST">
+        <label for="post_title">Title</label>
+        <input 
+            type="text" 
+            name="post_title" 
+            id="post_title" 
+            value="{{ request.form['post_title'] }}"
+            required>
+        <label for="post_text">Text <small>(min. 5 chars)</small></label>
+        <textarea
+            name="post_text"
+            id="post_text"
+            value="{{ request.form['post_text'] }}"
+            required>
+        </textarea>
+        <input type="submit" value="Post up">
+    </form>
+{% endblock %}
+{% block footer %}&copy; by someone{% endblock %}
