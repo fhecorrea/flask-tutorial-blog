@@ -1,8 +1,6 @@
 from setuptools import find_packages, setup
 
-'''
-    https://packaging.python.org/tutorials/packaging-projects/
-'''
+# https://packaging.python.org/tutorials/packaging-projects/
 
 setup(
     name="fhblog",
@@ -13,5 +11,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
+        'pytest',
+        'coverage',
+        'wheel'
     ]
 )

@@ -10,12 +10,12 @@
 </head>
 <body>
     <nav>
-        <h1>Appl</h1>
+        <h1>An other Blog...</h1>
         <ul>
             <li><a href="{{ url_for('index') }}">Blog</a></li>
             {% if g.user %}
                 <li>{{ g.user['alias'] }} <small>({{ g.user['email'] }})</small></li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
             {% else %}
                 <li><a href="{{ url_for('auth.register') }}">Register</a></li>
                 <li><a href="{{ url_for('auth.login') }}">Log in</a></li>

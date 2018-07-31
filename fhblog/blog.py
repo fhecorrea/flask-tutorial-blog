@@ -30,9 +30,9 @@ def create():
         error = None
 
         if not title:
-            error = 'Title is required!'
+            error = 'Title is required.'
         elif len(body) < 5:
-            error = 'Body must have at least 5 caracters!'
+            error = 'Body must have at least 5 caracters.'
 
         if error is None:
             conn_db = get_conn()
@@ -73,7 +73,7 @@ def update(post_id):
         error = None
 
         if not title:
-            error = 'Title is required!'
+            error = 'Title is required.'
 
         if not error:
             conn_db = get_conn()
