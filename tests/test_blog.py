@@ -3,16 +3,22 @@ from fhblog.db import get_conn
 
 def test_index(client, auth):
     response = client.get('/')
-    assert b"Log in" in response.data
-    assert b"Register" in response.data
+    html_as_text = response.get_data(as_text=True)
+    assert "Log in" in html_as_text
+    assert "Register" in html_as_text
 
     auth.login()
-    # TODO: Fix that issue with login->refresh->appearing of "Log out"
-    #assert b"Log out" in response.data
-    assert b"My first post" in response.data
-    #assert b"Too long, you didn't read." in response.data
-    #assert b"by Silva on 18-jun-2018" in response.data
-    #assert b"href=\"/1/update\"" in response.data
+    assert "My first post" in html_as_text
+    assert "Hello everybody.\nToo long, you didn&#39;t read." in html_as_text
+    assert "by Silva on 18 Jun 2018" in html_as_text
+
+    # The variable 'refreshed_page' is to force a update on the page. 
+    # Without it, the client continues with the old page loaded in the tests beginning
+    refreshed_page = client.get('/')
+    refreshed_html_as_text = refreshed_page.get_data(as_text=True)
+    assert "href=\"/auth/logout\"" in refreshed_html_as_text
+    assert "href=\"/1/update\"" in refreshed_html_as_text
+    assert "href=\"/1/\"" in refreshed_html_as_text
 
 @pytest.mark.parametrize(
     'path', (
@@ -48,13 +54,27 @@ def test_exists_required(client, auth, path):
 
 def test_create(client, auth, app):
     auth.login()
-    assert client.get('/create').status_code == 200
+    assert client.get('/create').status_code == 201
     client.post('/create', data={'post_title': 'another one', 'post_text': 'hello everybody!'})
 
     with app.app_context():
         conn_db = get_conn()
         count = conn_db.execute('SELECT COUNT(id) FROM post').fetchone()[0]
         assert count == 5
+
+def test_reading(client, auth):
+    # Accessing as an unlogged user
+    response = client.get('/3/')
+    assert response.status_code == 200
+    html_page_as_text = response.get_data(as_text=True)
+    assert "Many troubles..." in html_page_as_text
+    assert "In this post, we are going to talk about something." in html_page_as_text
+    #assert "by Silva on 06 Jul 2018" in html_page_as_text
+    assert "href=\"/3/update\"" not in html_page_as_text
+    # Logging in and acessing the same resource
+    auth.login()
+    new_response = client.get('/3/')
+    assert b"href=\"/3/update\"" in new_response.data
 
 def test_update(client, auth, app):
     auth.login()

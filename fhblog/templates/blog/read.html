@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h2>{% block title %}Post editing{% endblock %}</h2>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('blog.index') }}">Back to home</a>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <h2>{{ post['title'] }}</h2>
+    <p class="body">{{ post['body'] }}</p>
+    <div class="details">
+        <div class="author">
+            by {{ post['alias'] }}
+        </div>
+        &nbsp;
+        <div class="created">
+            {{ passed_days_until_today }}
+            {% if passed_days_until_today <= 2 %}
+                {{ passed_days_until_today < 1 and 'Today' or 'Yesterday' }}, at {{ post['created'].strftime("%H %m") }}
+            {% elif passed_days_until_today < 7 %}
+                in {{ passed_days_until_today }} days ago
+            {% elif abs(passed_days_until_today / 7) < 4 %}
+                in {{ passed_days_until_today }} week{{ abs(passed_days_until_today / 7) > 1 and 's' or '' }} ago
+            {% else %}
+                on {{ post['created'].strftime("%d %b %Y") }}
+            {% endif %}
+        </div>
+    </div>
+    {% if g.user['id'] == post['author_id'] %}
+        <div class="options">
+            <a href="{{ url_for('blog.update', post_id=post['id']) }}">Edit this post</a>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block footer %}&copy; hosted on somewhere{% endblock %}

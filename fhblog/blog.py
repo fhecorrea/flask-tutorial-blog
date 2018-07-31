@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import (
     Blueprint, flash, redirect, url_for, g, render_template, request
 )
@@ -45,7 +46,7 @@ def create():
 
         flash(error)
 
-    return render_template('blog/create.html')
+    return render_template('blog/create.html'), 201
 
 def get_post(post_id, check_author=True):
     post = get_conn().execute(
@@ -61,6 +62,16 @@ def get_post(post_id, check_author=True):
         abort(403, 'Whoa! You cannot access this!')
 
     return post
+
+@blueprint.route('/<int:post_id>/', methods=['GET'])
+def read(post_id):
+    post = get_post(post_id, False)
+    passed_days_until_today = datetime.today() - post['created']
+    return render_template(
+        'blog/read.html',
+        post=post,
+        passed_days_until_today=passed_days_until_today.days
+    ), 200
 
 @blueprint.route('/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
@@ -86,7 +97,7 @@ def update(post_id):
 
         flash(error)
 
-    return render_template('blog/update.html', post=post)
+    return render_template('blog/update.html', post=post), 200
 
 @blueprint.route('/<int:post_id>/delete', methods=['POST'])
 @login_required

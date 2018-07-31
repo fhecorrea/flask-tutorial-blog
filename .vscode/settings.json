@@ -2,6 +2,5 @@
     "python.pythonPath": "${workspaceFolder}/env/bin/python",
     "python.linting.pylintArgs": [
         "--disable=C0111"
-    ],
-    "python.unitTest.pyTestEnabled": true,
+    ]
 }
